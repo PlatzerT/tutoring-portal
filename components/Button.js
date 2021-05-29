@@ -5,7 +5,7 @@ export default function Button({ label, type, ...props }) {
 		<div className="h-16">
 			<button
 				{...props}
-				className="w-full h-full text-lg font-bold text-white bg-gray-500 rounded-md gradient-button"
+				className="w-full h-full text-lg font-bold text-white transition-all rounded-md bg-gradient-to-r from-purple-900 to-purple-500 hover:opacity-90"
 			>
 				{label}
 			</button>

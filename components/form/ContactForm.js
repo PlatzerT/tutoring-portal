@@ -9,7 +9,6 @@ export default function ContactForm({ subjects }) {
 	const [message, setMessage] = useState('');
 	const [selectedSubject, setSelectedSubject] = useState(subjects[0] || '');
 	const [file, setFile] = useState(null);
-	const [isClicked, setIsClicked] = useState(false);
 
 	async function handleSubmit(e) {
 		const form = new FormData();
@@ -18,7 +17,6 @@ export default function ContactForm({ subjects }) {
 		form.append('message', message);
 		form.append('subject', selectedSubject.abbreviation);
 		form.append('file', file);
-		setIsClicked(true);
 		e.preventDefault();
 		await fetch('/api/contact', {
 			method: 'POST',
@@ -28,7 +26,6 @@ export default function ContactForm({ subjects }) {
 
 	function loadFile(e) {
 		const target = e.target;
-		console.log(target.files);
 		setFile(target.files[0]);
 	}
 	return (
@@ -56,7 +53,7 @@ export default function ContactForm({ subjects }) {
 					<label htmlFor="subject">Fach</label>
 					<select
 						id="subject"
-						className="px-2 py-1 text-white bg-green-100 gradient-button"
+						className="px-2 py-1 text-white bg-green-100 bg-primary"
 						value={selectedSubject}
 						onChange={(e) => setSelectedSubject(e.currentTarget.value)}
 					>
@@ -82,7 +79,7 @@ export default function ContactForm({ subjects }) {
 					<label
 						className={`flex ${
 							file ? 'bg-purple-100 ' : ''
-						} hover:bg-purple-50 h-24 items-center justify-center w-full px-2 overflow-auto space-x-2 align-top transition-all ease-in border-2 border-black border-dashed hover:border-solid rounded-r-md rounded-b-md`}
+						} hover:bg-purple-50 cursor-pointer duration-75 h-24 items-center justify-center w-full px-2 overflow-auto space-x-2 align-top transition-all ease-in border-2 border-black border-dashed hover:border-solid rounded-r-md rounded-b-md`}
 					>
 						<input
 							type="file"
@@ -108,7 +105,7 @@ export default function ContactForm({ subjects }) {
 						)}
 					</label>
 				</div>
-				<Button label="Submit" onClick={handleSubmit} />
+				<Button label="Absenden" onClick={handleSubmit} />
 			</form>
 		</div>
 	);

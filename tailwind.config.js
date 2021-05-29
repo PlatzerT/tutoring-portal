@@ -5,7 +5,14 @@ module.exports = {
 		fontFamily: {
 			sans: ['Poppins', 'sans-serif'],
 		},
-		extend: {},
+		extend: {
+			colors: {
+				primary: 'var(--primary)',
+				dark: 'var(--dark)',
+				light: 'var(--light)',
+				mythic: 'var(--mythic)',
+			},
+		},
 	},
 	variants: {
 		extend: {},
