@@ -15,6 +15,30 @@ model Contact {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   name      String
-  message   String
+  createdAt DateTime @default(now())
+  subject   Subject  @relation(references: [id], fields: [subjectId])
+  files     File[]
+  subjectId Int      @default(0)
+}
+
+model File {
+  id        Int     @id @default(autoincrement())
+  contact   Contact @relation(references: [id], fields: [contactId])
+  contactId Int
+  imagePath String
+}
+
+model Subject {
+  id           Int       @id @default(autoincrement())
+  abbreviation String    @unique
+  fullName     String    @unique
+  Contact      Contact[]
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  title     String
+  body      String
+  imagePath String
   createdAt DateTime @default(now())
 }
