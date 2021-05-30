@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../Button';
 import FileShowcase from './FileShowcase';
 import InputField from './InputField';
@@ -9,7 +9,18 @@ export default function ContactForm({ subjects }) {
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
 	const [selectedSubject, setSelectedSubject] = useState(subjects[0] || '');
-	const [file, setFile] = useState(null);
+	const [files, setFiles] = useState(null);
+	const [displayedFiles, setDisplayedFiles] = useState([]);
+
+	useEffect(() => {
+		if (files) {
+			var arr = [];
+			for (let i = 0; i < files.length; i++) {
+				arr.push(files[i]);
+			}
+			setDisplayedFiles(arr);
+		}
+	}, [files]);
 
 	async function handleSubmit(e) {
 		const form = new FormData();
@@ -17,7 +28,7 @@ export default function ContactForm({ subjects }) {
 		form.append('email', email);
 		form.append('message', message);
 		form.append('subjectID', selectedSubject);
-		form.append('file', file);
+		form.append('file', files);
 		e.preventDefault();
 		await fetch('/api/contact', {
 			method: 'POST',
@@ -25,18 +36,13 @@ export default function ContactForm({ subjects }) {
 		});
 	}
 
-	function removeFileFromList(e) {
-		setFile(null);
-	}
-
 	function loadFile(e) {
-		const target = e.target;
-		console.log(target.files);
-		setFile(target.files[0]);
+		const target = e.currentTarget;
+		setFiles(target.files);
 	}
 	return (
-		<div className="w-full md:items-start md:justify-start md:space-x-32 md:flex bb">
-			<form name="contactForm" className="flex flex-col space-y-5 md:w-2/5">
+		<div className="w-full md:items-start md:justify-between md:space-x-32 md:flex">
+			<form name="contactForm" className="flex flex-col space-y-5 md:w-1/3">
 				<InputField
 					label="Name"
 					name="name"
@@ -74,7 +80,7 @@ export default function ContactForm({ subjects }) {
 					<div>Message</div>
 					<textarea
 						name="message"
-						className="w-full px-2 py-1 align-top transition-all duration-75 border-2 border-black focus:border-purple-800 hover:border-purple-800 rounded-r-md rounded-b-md h-44"
+						className="w-full px-2 py-1 align-top transition-all duration-75 border-2 border-black hover:border-purple-800 rounded-r-md rounded-b-md h-44"
 						value={message}
 						onChange={(e) => setMessage(e.currentTarget.value)}
 						required
@@ -84,25 +90,35 @@ export default function ContactForm({ subjects }) {
 					<div>Dateien</div>
 					<label
 						className={`flex ${
-							file ? 'bg-purple-100 ' : ''
-						} hover:bg-purple-50 cursor-pointer duration-75 h-24 items-center justify-center w-full px-2 overflow-auto space-x-2 align-top transition-all ease-in border-2 border-black border-dashed hover:border-solid rounded-r-md rounded-b-md`}
+							files ? 'bg-purple-100 ' : ''
+						} hover:bg-purple-50 cursor-pointer duration-75 items-center justify-center w-full px-2 overflow-auto space-x-2 align-top transition-all ease-in border-2 border-black border-dashed hover:border-solid rounded-r-md rounded-b-md`}
 					>
 						<input
 							type="file"
-							name="file"
-							accept="file/png, file/jpeg"
+							name="files"
 							className="hidden"
 							onChange={loadFile}
 							multiple
 							required
 						/>
-						{file ? (
-							<div className="flex items-center justify-center w-5/6 space-x-5 font-semibold">
-								{file.type.startsWith('image') && (
-									<img src={URL.createObjectURL(file)} height="40" width="60" />
-								)}
+						{files ? (
+							<div className="items-center justify-center hidden w-5/6 space-x-5 font-semibold sm:flex">
+								{displayedFiles.map((file) => {
+									if (file.type.startsWith('image')) {
+										return (
+											<img
+												key={file.name}
+												src={URL.createObjectURL(file)}
+												height="40"
+												width="60"
+											/>
+										);
+									} else {
+										return '';
+									}
+								})}
 
-								<div>{file.name}</div>
+								<div>{files.name}</div>
 							</div>
 						) : (
 							<div className="flex items-center space-x-2">
@@ -114,15 +130,41 @@ export default function ContactForm({ subjects }) {
 				</div>
 				<Button label="Absenden" onClick={handleSubmit} />
 			</form>
-			<div className="flex-1 hidden md:flex md:flex-col md:space-y-4">
-				<h2 className="text-xl font-semibold">Dateien:</h2>
-				{file && (
-					<div className="grid w-full grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3 auto-cols-auto">
-						<FileShowcase file={file} onClick={removeFileFromList} />
-						<FileShowcase file={file} onClick={removeFileFromList} />
+			<div className="flex-1 hidden w-60 md:flex md:flex-col md:space-y-4">
+				<h2 className="text-4xl font-semibold">Dateien:</h2>
+				{files && files.length > 0 && (
+					<div className="w-full gap-4 fluid-grid">
+						{displayedFiles.map((file) => (
+							<FileShowcase key={file.name} file={file} />
+						))}
 					</div>
 				)}
 			</div>
+			<style jsx>{`
+				.fluid-grid {
+					display: column;
+				}
+				@media (min-width: 640px) {
+					.fluid-grid {
+						columns: 1;
+					}
+				}
+				@media (min-width: 768px) {
+					.fluid-grid {
+						columns: 2;
+					}
+				}
+				@media (min-width: 1024px) {
+					.fluid-grid {
+						columns: 3;
+					}
+				}
+				@media (min-width: 1280px) {
+					.fluid-grid {
+						columns: 1;
+					}
+				}
+			`}</style>
 		</div>
 	);
 }
