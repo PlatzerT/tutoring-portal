@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import MobileMenuItem from './MobileMenuItem';
 
@@ -9,20 +10,28 @@ export default function MobileMenu() {
 	const [showMenu, setShowMenu] = useState(false);
 	return (
 		<div className="flex justify-between w-full">
-			<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
-			<Image
-				src="/menu_mobile_light_mode.svg"
-				width={32}
-				height={32}
-				className="cursor-pointer"
-				onClick={() => setShowMenu(!showMenu)}
-			/>
+			<div className="flex cursor-pointer">
+				<Link href="/">
+					<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
+				</Link>
+			</div>
+
+			<div className="flex p-2 rounded-lg hover:bg-gray-200">
+				<Image
+					src="/menu_mobile_light_mode.svg "
+					width={32}
+					height={32}
+					className="cursor-pointer"
+					onClick={() => setShowMenu(!showMenu)}
+				/>
+			</div>
+
 			{showMenu && (
 				<div className="fixed inset-0 z-20 flex flex-col bg-black bg-opacity-40">
 					<div className="flex flex-col items-center justify-center h-full bg-white dark:bg-dark">
 						<div className="flex flex-col w-3/4 space-y-6">
 							<div
-								className="fixed flex p-2 rounded-lg cursor-pointer hover:bg-gray-200 right-6 top-8"
+								className="fixed flex p-2 rounded-lg cursor-pointer hover:bg-gray-200 right-8 top-10"
 								onClick={() => setShowMenu(!showMenu)}
 							>
 								<Image src="/close.svg" height={32} width={32} />
