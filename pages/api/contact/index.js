@@ -21,39 +21,36 @@ export default async (req, res) => {
 	}
 
 	if (req.method === 'POST') {
-		let { name, email, subject, message } = req.body;
-
-		// Create directory in /public
+		let { name, email, subjectID, message } = req.body;
+		subjectID = parseInt(subjectID);
 		const formattedName = name.toLowerCase().replace(' ', '_');
 		const blob = req.files[0];
-		await fs.mkdir(`./public/${formattedName}`, { recursive: true }, (err) => {
-			if (err) {
-				console.log(err);
-			} else {
-				console.log('Directory created!');
-			}
-		});
-
-		// Create file in /public/.../...
 		const randomID = uuidv4();
 		const ext = blob.originalname.slice(blob.originalname.indexOf('.'));
-		try {
-			fs.writeFileSync(
-				`./public/${formattedName}/${randomID}${ext}`,
-				blob.buffer
-			);
-		} catch (err) {
-			console.log(err);
-		}
 
 		// Write to database
-		const res = await prisma.contact.create({
-			data: {
+		const res = await prisma.contact.upsert({
+			where: {
+				email: email,
+			},
+			create: {
 				name: name,
 				email: email,
-				subject: {
+				subjects: {
 					connect: {
-						abbreviation: subject,
+						id: subjectID,
+					},
+				},
+				files: {
+					create: {
+						imagePath: `/${formattedName}/${randomID}${ext}`,
+					},
+				},
+			},
+			update: {
+				subjects: {
+					connect: {
+						id: subjectID,
 					},
 				},
 				files: {
@@ -63,7 +60,25 @@ export default async (req, res) => {
 				},
 			},
 		});
-		console.log(res);
+
+		// Create directory in /public
+		await fs.mkdir(`./public/${formattedName}`, { recursive: true }, (err) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('Directory created!');
+			}
+		});
+
+		// Create file in /public/.../...
+		try {
+			fs.writeFileSync(
+				`./public/${formattedName}/${randomID}${ext}`,
+				blob.buffer
+			);
+		} catch (err) {
+			console.log(err);
+		}
 	}
 	res.status(200).send('');
 };

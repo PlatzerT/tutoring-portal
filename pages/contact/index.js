@@ -15,7 +15,14 @@ export default function ContactPage({ subjects }) {
 }
 
 export async function getStaticProps() {
-	const subjects = await prisma.subject.findMany();
+	const subjects = await prisma.subject.findMany({
+		select: {
+			id: true,
+			abbreviation: true,
+			fullName: true,
+			contacts: false,
+		},
+	});
 	return {
 		props: {
 			subjects,

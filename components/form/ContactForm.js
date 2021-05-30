@@ -15,7 +15,7 @@ export default function ContactForm({ subjects }) {
 		form.append('name', name);
 		form.append('email', email);
 		form.append('message', message);
-		form.append('subject', selectedSubject.abbreviation);
+		form.append('subjectID', selectedSubject);
 		form.append('file', file);
 		e.preventDefault();
 		await fetch('/api/contact', {
@@ -58,7 +58,7 @@ export default function ContactForm({ subjects }) {
 						onChange={(e) => setSelectedSubject(e.currentTarget.value)}
 					>
 						{subjects.map((subject) => (
-							<option key={subject.id} value={subject.abbreviation}>
+							<option key={subject.id} value={subject.id}>
 								{subject.fullName}
 							</option>
 						))}
