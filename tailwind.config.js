@@ -10,7 +10,6 @@ module.exports = {
 				primary: 'var(--primary)',
 				dark: 'var(--dark)',
 				light: 'var(--light)',
-				mythic: 'var(--mythic)',
 			},
 		},
 	},
