@@ -9,3 +9,7 @@
 	--light: #ffffff !important;
 	--dark: #212121 !important;
 }
+
+.bb {
+	border: 1px solid black;
+}

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import Button from '../Button';
+import FileShowcase from './FileShowcase';
 import InputField from './InputField';
 
 export default function ContactForm({ subjects }) {
@@ -24,13 +25,18 @@ export default function ContactForm({ subjects }) {
 		});
 	}
 
+	function removeFileFromList(e) {
+		setFile(null);
+	}
+
 	function loadFile(e) {
 		const target = e.target;
+		console.log(target.files);
 		setFile(target.files[0]);
 	}
 	return (
-		<div>
-			<form name="contactForm" className="flex flex-col space-y-5">
+		<div className="w-full md:items-start md:justify-start md:space-x-32 md:flex bb">
+			<form name="contactForm" className="flex flex-col space-y-5 md:w-2/5">
 				<InputField
 					label="Name"
 					name="name"
@@ -75,7 +81,7 @@ export default function ContactForm({ subjects }) {
 					></textarea>
 				</div>
 				<div className="flex-1">
-					<div>Files</div>
+					<div>Dateien</div>
 					<label
 						className={`flex ${
 							file ? 'bg-purple-100 ' : ''
@@ -87,6 +93,7 @@ export default function ContactForm({ subjects }) {
 							accept="file/png, file/jpeg"
 							className="hidden"
 							onChange={loadFile}
+							multiple
 							required
 						/>
 						{file ? (
@@ -107,6 +114,15 @@ export default function ContactForm({ subjects }) {
 				</div>
 				<Button label="Absenden" onClick={handleSubmit} />
 			</form>
+			<div className="flex-1 hidden md:flex md:flex-col md:space-y-4">
+				<h2 className="text-xl font-semibold">Dateien:</h2>
+				{file && (
+					<div className="grid w-full grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3 auto-cols-auto">
+						<FileShowcase file={file} onClick={removeFileFromList} />
+						<FileShowcase file={file} onClick={removeFileFromList} />
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

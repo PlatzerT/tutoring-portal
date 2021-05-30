@@ -8,8 +8,9 @@ const normalLinkStyles =
 
 export default function MobileMenu() {
 	const [showMenu, setShowMenu] = useState(false);
+
 	return (
-		<div className="flex justify-between w-full">
+		<div className="flex items-center justify-between w-full">
 			<div className="flex cursor-pointer">
 				<Link href="/">
 					<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
