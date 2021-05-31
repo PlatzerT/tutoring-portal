@@ -1,3 +1,26 @@
+/*import formidable from 'formidable';
+
+export const config = {
+	api: {
+		bodyParser: false,
+	},
+};
+
+export default async (req, res) => {
+	const form = new formidable.IncomingForm();
+	form.parse(req, (err, fields, files) => {
+		if (err) {
+			console.log(err);
+			return res.status(400);
+		}
+		console.log(fields);
+		const arr = Object.values(files);
+		for (let i = 0; i < arr.length; i++) {
+			console.log(arr[i]);
+		}
+	});
+};*/
+
 import multer from 'multer';
 import initMiddleware from '../../../lib/initMiddleware';
 import fs from 'fs';
@@ -15,18 +38,29 @@ const multerAny = initMiddleware(upload.any());
 
 export default async (req, res) => {
 	await multerAny(req, res);
-
-	if (!req.files?.length || req.files.length > 1) {
-		return res.status(400);
-	}
+	const { files } = req;
 
 	if (req.method === 'POST') {
 		let { name, email, subjectID, message } = req.body;
 		subjectID = parseInt(subjectID);
-		const formattedName = name.toLowerCase().replace(' ', '_');
-		const blob = req.files[0];
-		const randomID = uuidv4();
-		const ext = blob.originalname.slice(blob.originalname.indexOf('.'));
+
+		// Format folder name
+		const formattedName = name
+			.toUpperCase()
+			.replace(' ', '_')
+			.concat('__', email.replace('@', '_'));
+
+		// Format files in request correctly
+		let formattedFiles = [];
+		formattedFiles = files.map((file) => {
+			let randomID = uuidv4();
+			const ext = file.originalname.slice(file.originalname.indexOf('.'));
+			return {
+				imagePath: `/${formattedName}/${randomID}${ext}`,
+				randomID,
+				ext,
+			};
+		});
 
 		// Write to database
 		const res = await prisma.contact.upsert({
@@ -42,9 +76,7 @@ export default async (req, res) => {
 					},
 				},
 				files: {
-					create: {
-						imagePath: `/${formattedName}/${randomID}${ext}`,
-					},
+					create: formattedFiles.map((file) => ({ imagePath: file.imagePath })),
 				},
 			},
 			update: {
@@ -54,9 +86,7 @@ export default async (req, res) => {
 					},
 				},
 				files: {
-					create: {
-						imagePath: `/${formattedName}/${randomID}${ext}`,
-					},
+					create: formattedFiles.map((file) => ({ imagePath: file.imagePath })),
 				},
 			},
 		});
@@ -72,13 +102,19 @@ export default async (req, res) => {
 
 		// Create file in /public/.../...
 		try {
-			fs.writeFileSync(
-				`./public/${formattedName}/${randomID}${ext}`,
-				blob.buffer
-			);
+			for (let i = 0; i < formattedFiles.length; i++) {
+				const buffer = files[i].buffer;
+
+				fs.writeFileSync(
+					`./public/${formattedName}/${formattedFiles[i].randomID}${formattedFiles[i].ext}`,
+					buffer
+				);
+			}
 		} catch (err) {
 			console.log(err);
 		}
+	} else {
+		return res.status(405).send('Method not allowed!');
 	}
 	res.status(200).send('');
 };

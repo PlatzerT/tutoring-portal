@@ -4,7 +4,7 @@ import Link from 'next/link';
 import DesktopMenuItem from './DesktopMenuItem';
 
 const normalLinkStyles =
-	'text-dark hover:bg-gray-100 text-sm font-bold uppercase w-full h-full';
+	'text-dark hover:bg-gray-100 text-sm font-semibold uppercase w-full h-full';
 
 export default function DesktopMenu() {
 	return (
@@ -44,7 +44,7 @@ export default function DesktopMenu() {
 				<DesktopMenuItem
 					label="Kontaktieren"
 					to="/contact"
-					additionalClasses="bg-primary text-white font-semibold hover:opacity-90 uppercase"
+					additionalClasses="bg-primary text-sm text-white font-bold hover:opacity-90 uppercase"
 				/>
 			</div>
 		</div>

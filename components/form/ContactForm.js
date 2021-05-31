@@ -3,14 +3,23 @@ import React, { useEffect, useState } from 'react';
 import Button from '../Button';
 import FileShowcase from './FileShowcase';
 import InputField from './InputField';
+import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
 
 export default function ContactForm({ subjects }) {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
-	const [selectedSubject, setSelectedSubject] = useState(subjects[0] || '');
-	const [files, setFiles] = useState(null);
+	const [selectedSubject, setSelectedSubject] = useState(
+		subjects[0].id || null
+	);
+	const [files, setFiles] = useState([]);
 	const [displayedFiles, setDisplayedFiles] = useState([]);
+
+	function onDrop(acceptedFiles) {
+		setFiles(acceptedFiles);
+	}
+	const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
 	useEffect(() => {
 		if (files) {
@@ -28,12 +37,17 @@ export default function ContactForm({ subjects }) {
 		form.append('email', email);
 		form.append('message', message);
 		form.append('subjectID', selectedSubject);
-		form.append('file', files);
+		console.log('files: ', files);
+		for (let i = 0; i < files.length; i++) {
+			form.append(files[i].name, files[i]);
+		}
 		e.preventDefault();
-		await fetch('/api/contact', {
-			method: 'POST',
-			body: form,
-		});
+		const config = {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		};
+		const res = await axios.post('/api/contact', form, config);
 	}
 
 	function loadFile(e) {
@@ -42,7 +56,11 @@ export default function ContactForm({ subjects }) {
 	}
 	return (
 		<div className="w-full md:items-start md:justify-between md:space-x-32 md:flex">
-			<form name="contactForm" className="flex flex-col space-y-5 md:w-1/3">
+			<form
+				name="contactForm"
+				encType="multipart/form-data"
+				className="flex flex-col space-y-5 md:w-1/3"
+			>
 				<InputField
 					label="Name"
 					name="name"
@@ -95,7 +113,7 @@ export default function ContactForm({ subjects }) {
 					>
 						<input
 							type="file"
-							name="files"
+							name="file"
 							className="hidden"
 							onChange={loadFile}
 							multiple
@@ -132,6 +150,10 @@ export default function ContactForm({ subjects }) {
 			</form>
 			<div className="flex-1 hidden w-60 md:flex md:flex-col md:space-y-4">
 				<h2 className="text-4xl font-semibold">Dateien:</h2>
+				<div {...getRootProps()}>
+					<input {...getInputProps()} type="file" />
+					<div>Drop here</div>
+				</div>
 				{files && files.length > 0 && (
 					<div className="w-full gap-4 fluid-grid">
 						{displayedFiles.map((file) => (
