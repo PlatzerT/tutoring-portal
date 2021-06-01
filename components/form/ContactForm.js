@@ -39,7 +39,6 @@ export default function ContactForm({ subjects }) {
 		form.append('email', email);
 		form.append('message', message);
 		form.append('subjectID', selectedSubject);
-		console.log('files: ', files);
 		for (let i = 0; i < files.length; i++) {
 			form.append(files[i].name, files[i]);
 		}
@@ -111,7 +110,7 @@ export default function ContactForm({ subjects }) {
 				<div className="flex items-center justify-between md:hidden">
 					<div
 						{...getRootProps()}
-						className="p-2 border-2 border-purple-600 cursor-pointer hover:bg-purple-600 hover:text-white text-primary rounded-r-md rounded-b-md"
+						className="p-2 border-2 border-purple-600 cursor-pointer hover:bg-purple-800 hover:text-white text-primary rounded-r-md rounded-b-md"
 					>
 						<input {...getInputProps()} type="file" />
 						<div className="">Dateien hochladen</div>
@@ -165,7 +164,7 @@ export default function ContactForm({ subjects }) {
 						)}
 					</label>
 				</div>*/}
-				<Button label="Absenden" type="submit" disabled={isValid} />
+				<Button label="Absenden" type="submit" disabled={false} />
 			</form>
 			{/**grid min-h-0 grid-cols-2 gap-4 p-3 overflow-auto lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 */}
 			<div className="flex-1 hidden md:flex md:flex-col">

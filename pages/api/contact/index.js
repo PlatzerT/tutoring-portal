@@ -1,30 +1,6 @@
-/*import formidable from 'formidable';
-
-export const config = {
-	api: {
-		bodyParser: false,
-	},
-};
-
-export default async (req, res) => {
-	const form = new formidable.IncomingForm();
-	form.parse(req, (err, fields, files) => {
-		if (err) {
-			console.log(err);
-			return res.status(400);
-		}
-		console.log(fields);
-		const arr = Object.values(files);
-		for (let i = 0; i < arr.length; i++) {
-			console.log(arr[i]);
-		}
-	});
-};*/
-
 import multer from 'multer';
 import initMiddleware from '../../../lib/initMiddleware';
 import fs from 'fs';
-import { v4 as uuidv4 } from 'uuid';
 import prisma from 'lib/prisma';
 
 export const config = {
@@ -44,6 +20,12 @@ export default async (req, res) => {
 		let { name, email, subjectID, message } = req.body;
 		subjectID = parseInt(subjectID);
 
+		const subject = await prisma.subject.findUnique({
+			where: {
+				id: subjectID,
+			},
+		});
+
 		// Format folder name
 		const formattedName = name
 			.toUpperCase()
@@ -53,12 +35,11 @@ export default async (req, res) => {
 		// Format files in request correctly
 		let formattedFiles = [];
 		formattedFiles = files.map((file) => {
-			let randomID = uuidv4();
-			const ext = file.originalname.slice(file.originalname.indexOf('.'));
+			const fileName = file.originalname;
 			return {
-				imagePath: `/${formattedName}/${randomID}${ext}`,
-				randomID,
-				ext,
+				imagePath: `/${formattedName}/${subject.abbreviation}/${fileName}`,
+				subject: subject.abbreviation,
+				fileName: fileName,
 			};
 		});
 
@@ -76,7 +57,10 @@ export default async (req, res) => {
 					},
 				},
 				files: {
-					create: formattedFiles.map((file) => ({ imagePath: file.imagePath })),
+					create: formattedFiles.map((file) => ({
+						imagePath: file.imagePath,
+						subject: file.subject,
+					})),
 				},
 			},
 			update: {
@@ -86,19 +70,26 @@ export default async (req, res) => {
 					},
 				},
 				files: {
-					create: formattedFiles.map((file) => ({ imagePath: file.imagePath })),
+					create: formattedFiles.map((file) => ({
+						imagePath: file.imagePath,
+						subject: file.subject,
+					})),
 				},
 			},
 		});
 
 		// Create directory in /public
-		await fs.mkdir(`./public/${formattedName}`, { recursive: true }, (err) => {
-			if (err) {
-				console.log(err);
-			} else {
-				console.log('Directory created!');
+		fs.mkdirSync(
+			`./public/${formattedName}/${subject.abbreviation}`,
+			{ recursive: true },
+			(err) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log('Directory created!');
+				}
 			}
-		});
+		);
 
 		// Create file in /public/.../...
 		try {
@@ -106,7 +97,7 @@ export default async (req, res) => {
 				const buffer = files[i].buffer;
 
 				fs.writeFileSync(
-					`./public/${formattedName}/${formattedFiles[i].randomID}${formattedFiles[i].ext}`,
+					`./public/${formattedName}/${subject.abbreviation}/${formattedFiles[i].fileName}`,
 					buffer
 				);
 			}
