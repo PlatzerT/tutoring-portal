@@ -13,7 +13,9 @@ export default function MobileMenu() {
 		<div className="flex items-center justify-between w-full">
 			<div className="flex cursor-pointer">
 				<Link href="/">
-					<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
+					<div className="flex">
+						<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
+					</div>
 				</Link>
 			</div>
 

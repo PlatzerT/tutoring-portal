@@ -4,14 +4,10 @@ import Link from 'next/link';
 
 export default function DesktopMenuItem({ label, to, additionalClasses }) {
 	return (
-		<div>
-			<Link href={to}>
-				<button
-					className={`flex items-center px-4 py-3 rounded-md ${additionalClasses}`}
-				>
-					<div>{label}</div>
-				</button>
-			</Link>
-		</div>
+		<Link href={to}>
+			<a className={`px-4 py-3 rounded-md ${additionalClasses}`}>
+				<div>{label}</div>
+			</a>
+		</Link>
 	);
 }

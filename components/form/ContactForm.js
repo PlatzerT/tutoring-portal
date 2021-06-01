@@ -87,7 +87,7 @@ export default function ContactForm({ subjects }) {
 					<label htmlFor="subject">Fach</label>
 					<select
 						id="subject"
-						className="px-2 py-1 text-white bg-green-100 bg-primary"
+						className="px-2 py-1 text-white bg-purple-600"
 						value={selectedSubject}
 						onChange={(e) => setSelectedSubject(e.currentTarget.value)}
 					>
@@ -107,6 +107,21 @@ export default function ContactForm({ subjects }) {
 						onChange={(e) => setMessage(e.currentTarget.value)}
 						required
 					></textarea>
+				</div>
+				<div className="flex items-center justify-between md:hidden">
+					<div
+						{...getRootProps()}
+						className="p-2 border-2 border-purple-600 cursor-pointer hover:bg-purple-600 hover:text-white text-primary rounded-r-md rounded-b-md"
+					>
+						<input {...getInputProps()} type="file" />
+						<div className="">Dateien hochladen</div>
+					</div>
+					{files.length > 0 && (
+						<div className="p-2 bg-purple-100 rounded-lg">
+							<span className="font-bold">{files.length}</span> Datei
+							{files.length > 1 && 'en'}
+						</div>
+					)}
 				</div>
 				{/*<div className="flex-1">
 					<div>Dateien</div>
@@ -160,7 +175,7 @@ export default function ContactForm({ subjects }) {
 				>
 					<input {...getInputProps()} type="file" />
 					{files && files.length > 0 ? (
-						<div className="absolute inset-0 grid h-full grid-cols-2 gap-4 p-3 overflow-auto lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+						<div className="absolute inset-0 grid grid-cols-2 gap-4 p-3 overflow-auto auto-rows-min lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 							{displayedFiles.map((file) => (
 								<FileShowcase key={file.name} file={file} />
 							))}
