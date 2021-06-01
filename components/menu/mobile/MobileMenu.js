@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import MobileMenuItem from './MobileMenuItem';
 
 const normalLinkStyles =
-	'text-dark hover:bg-gray-100 font-bold uppercase tracking-wider w-full';
+	'text-dark hover:bg-purple-100 font-bold uppercase tracking-wider w-full';
 
 export default function MobileMenu() {
 	const [showMenu, setShowMenu] = useState(false);
@@ -13,13 +13,13 @@ export default function MobileMenu() {
 		<div className="flex items-center justify-between w-full">
 			<div className="flex cursor-pointer">
 				<Link href="/">
-					<div className="flex">
+					<div className="flex p-1 rounded hover:bg-purple-100">
 						<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
 					</div>
 				</Link>
 			</div>
 
-			<div className="flex p-2 rounded-lg hover:bg-gray-200">
+			<div className="flex p-2 rounded-lg hover:bg-purple-100">
 				<Image
 					src="/menu_mobile_light_mode.svg "
 					width={32}
@@ -34,7 +34,7 @@ export default function MobileMenu() {
 					<div className="flex flex-col items-center justify-center h-full bg-white dark:bg-dark">
 						<div className="flex flex-col w-3/4 space-y-6">
 							<div
-								className="fixed flex p-2 rounded-lg cursor-pointer hover:bg-gray-200 right-8 top-10"
+								className="fixed flex p-2 rounded-lg cursor-pointer hover:bg-purple-100 right-8 top-10"
 								onClick={() => setShowMenu(!showMenu)}
 							>
 								<Image src="/close.svg" height={32} width={32} />

@@ -37,7 +37,7 @@ export default async (req, res) => {
 		formattedFiles = files.map((file) => {
 			const fileName = file.originalname;
 			return {
-				imagePath: `.contacts/${formattedName}/${subject.abbreviation}/${fileName}`,
+				imagePath: `/contacts/${formattedName}/${subject.abbreviation}/${fileName}`,
 				subject: subject.abbreviation,
 				fileName: fileName,
 			};
@@ -80,7 +80,7 @@ export default async (req, res) => {
 
 		// Create directory in /public
 		fs.mkdirSync(
-			`./contacts/${formattedName}/${subject.abbreviation}`,
+			`./public/contacts/${formattedName}/${subject.abbreviation}`,
 			{ recursive: true },
 			(err) => {
 				if (err) {
@@ -97,7 +97,7 @@ export default async (req, res) => {
 				const buffer = files[i].buffer;
 
 				fs.writeFileSync(
-					`./contacts/${formattedName}/${subject.abbreviation}/${formattedFiles[i].fileName}`,
+					`./public/contacts/${formattedName}/${subject.abbreviation}/${formattedFiles[i].fileName}`,
 					buffer
 				);
 			}

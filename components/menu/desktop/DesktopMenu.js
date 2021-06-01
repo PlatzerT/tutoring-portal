@@ -4,14 +4,14 @@ import Link from 'next/link';
 import DesktopMenuItem from './DesktopMenuItem';
 
 const normalLinkStyles =
-	'text-dark hover:bg-gray-100 text-sm font-semibold uppercase';
+	'text-dark hover:bg-purple-100 text-sm font-semibold uppercase';
 
 export default function DesktopMenu() {
 	return (
 		<div className="flex items-center justify-between w-full">
 			<div className="flex cursor-pointer">
 				<Link href="/">
-					<div className="flex">
+					<div className="flex p-1 rounded hover:bg-purple-100">
 						<Image
 							src="/logo_mobile_light_mode.svg"
 							width={32}
