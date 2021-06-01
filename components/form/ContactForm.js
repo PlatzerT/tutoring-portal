@@ -16,6 +16,8 @@ export default function ContactForm({ subjects }) {
 	const [files, setFiles] = useState([]);
 	const [displayedFiles, setDisplayedFiles] = useState([]);
 
+	var isValid = name.length > 0 && email.length > 0 && message.length > 0;
+
 	function onDrop(acceptedFiles) {
 		setFiles(acceptedFiles);
 	}
@@ -55,11 +57,13 @@ export default function ContactForm({ subjects }) {
 		setFiles(target.files);
 	}
 	return (
-		<div className="w-full md:items-start md:justify-between md:space-x-32 md:flex">
+		<div className="w-full md:justify-between md:space-x-16 md:flex">
 			<form
 				name="contactForm"
 				encType="multipart/form-data"
-				className="flex flex-col space-y-5 md:w-1/3"
+				className="flex flex-col self-start w-full space-y-5 md:w-1/2 lg:w-2/5"
+				id="contact"
+				onSubmit={handleSubmit}
 			>
 				<InputField
 					label="Name"
@@ -104,7 +108,7 @@ export default function ContactForm({ subjects }) {
 						required
 					></textarea>
 				</div>
-				<div className="flex-1">
+				{/*<div className="flex-1">
 					<div>Dateien</div>
 					<label
 						className={`flex ${
@@ -145,48 +149,30 @@ export default function ContactForm({ subjects }) {
 							</div>
 						)}
 					</label>
-				</div>
-				<Button label="Absenden" onClick={handleSubmit} />
+				</div>*/}
+				<Button label="Absenden" type="submit" disabled={isValid} />
 			</form>
-			<div className="flex-1 hidden w-60 md:flex md:flex-col md:space-y-4">
-				<h2 className="text-4xl font-semibold">Dateien:</h2>
-				<div {...getRootProps()}>
+			{/**grid min-h-0 grid-cols-2 gap-4 p-3 overflow-auto lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 */}
+			<div className="flex-1 hidden md:flex md:flex-col">
+				<div
+					{...getRootProps()}
+					className={`flex items-center justify-center transition-all h-full relative duration-75 ease-in bg-purple-50 border-2 border-dashed rounded-md cursor-pointer border-gray-400 hover:bg-purple-100 hover:overscroll-y-auto`}
+				>
 					<input {...getInputProps()} type="file" />
-					<div>Drop here</div>
+					{files && files.length > 0 ? (
+						<div className="absolute inset-0 grid h-full grid-cols-2 gap-4 p-3 overflow-auto lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+							{displayedFiles.map((file) => (
+								<FileShowcase key={file.name} file={file} />
+							))}
+						</div>
+					) : (
+						<div className="flex flex-col items-center p-3 space-y-1 font-bold uppercase bg-purple-300 rounded-lg text-dark">
+							<Image src="/file_icon.svg" height={24} width={25.13} />
+							<div>Drop here</div>
+						</div>
+					)}
 				</div>
-				{files && files.length > 0 && (
-					<div className="w-full gap-4 fluid-grid">
-						{displayedFiles.map((file) => (
-							<FileShowcase key={file.name} file={file} />
-						))}
-					</div>
-				)}
 			</div>
-			<style jsx>{`
-				.fluid-grid {
-					display: column;
-				}
-				@media (min-width: 640px) {
-					.fluid-grid {
-						columns: 1;
-					}
-				}
-				@media (min-width: 768px) {
-					.fluid-grid {
-						columns: 2;
-					}
-				}
-				@media (min-width: 1024px) {
-					.fluid-grid {
-						columns: 3;
-					}
-				}
-				@media (min-width: 1280px) {
-					.fluid-grid {
-						columns: 1;
-					}
-				}
-			`}</style>
 		</div>
 	);
 }

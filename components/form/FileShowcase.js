@@ -1,17 +1,16 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { FileIcon, defaultStyles } from 'react-file-icon';
 
 export default function FileShowcase({ file }) {
+	const ext = file.name.slice(file.name.indexOf('.') + 1);
 	return (
-		<div className="relative w-full p-6 mb-4 overflow-hidden rounded-md shadow-sm border-primary break bg-purple-50">
-			<div className="px-2 py-1 font-semibold break-words bg-purple-200 rounded text-dark">
+		<div className="flex flex-col p-6 space-y-3 bg-purple-200 rounded-md shadow-sm border-primary">
+			<FileIcon extension={ext} {...defaultStyles[ext]} />
+
+			<div className="px-2 py-1 font-semibold truncate rounded text-dark">
 				{file.name}
 			</div>
-			<style jsx>{`
-				.break {
-					break-inside: avoid;
-				}
-			`}</style>
 		</div>
 	);
 }
