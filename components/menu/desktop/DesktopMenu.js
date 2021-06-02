@@ -23,14 +23,13 @@ export default function DesktopMenu() {
 			</div>
 			<div className="flex items-center justify-between space-x-5">
 				<DesktopMenuItem
-					label="Über mich"
-					to="/about"
-					additionalClasses={normalLinkStyles}
-				/>
-
-				<DesktopMenuItem
 					label="News"
 					to="/news"
+					additionalClasses={normalLinkStyles}
+				/>
+				<DesktopMenuItem
+					label="Sitemap"
+					to="/sitemap"
 					additionalClasses={normalLinkStyles}
 				/>
 				<DesktopMenuItem
@@ -43,11 +42,16 @@ export default function DesktopMenu() {
 					to="/downloads"
 					additionalClasses={normalLinkStyles}
 				/>
-				<DesktopMenuItem
+				<Link href="/contact">
+					<a className="flex p-3 rounded-md bg-primary hover:bg-dark">
+						<Image src="/pencil-fill.svg" height={20} width={20} />
+					</a>
+				</Link>
+				{/*<DesktopMenuItem
 					label="Kontaktieren"
 					to="/contact"
 					additionalClasses="bg-primary text-sm text-white font-bold hover:opacity-90 uppercase"
-				/>
+				/>*/}
 			</div>
 		</div>
 	);

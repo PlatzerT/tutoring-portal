@@ -1,9 +1,10 @@
 import React from 'react';
 import Menu from 'components/menu/Menu';
+import Image from 'next/image';
 
-export default function AboutPage() {
+export default function SitemapPage() {
 	return (
-		<div>
+		<div className="h-full">
 			<Menu />
 		</div>
 	);

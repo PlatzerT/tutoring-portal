@@ -40,15 +40,15 @@ export default function MobileMenu() {
 								<Image src="/close.svg" height={32} width={32} />
 							</div>
 							<MobileMenuItem
-								iconPath="/about.svg"
-								to="/about"
-								label="Über mich"
-								additionalClasses={normalLinkStyles}
-							/>
-							<MobileMenuItem
 								iconPath="/news.svg"
 								to="/news"
 								label="News"
+								additionalClasses={normalLinkStyles}
+							/>
+							<MobileMenuItem
+								iconPath="/sitemap.svg"
+								to="/sitemap"
+								label="Sitemap"
 								additionalClasses={normalLinkStyles}
 							/>
 							<MobileMenuItem

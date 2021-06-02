@@ -1,11 +1,74 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import prisma from 'lib/prisma';
 import Menu from 'components/menu/Menu';
+import Button from '../components/Button';
+import Link from 'next/link';
 
-export default function Home() {
+export default function Home({ subjects }) {
+	// 'Leistung steigern' 'Noten verbessern' 'Klassenbester werden'
+	/**
+	 * N
+	 */
 	return (
-		<div>
+		<>
 			<Menu />
-		</div>
+			<main className="flex flex-col justify-center">
+				<div className="space-y-8 sm:space-y-16 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mt-28">
+					{/* Hero section */}
+					<div className="flex flex-col items-center justify-center">
+						<div className="flex flex-col w-full space-y-3">
+							<div className="text-5xl font-bold">
+								<span className="text-primary">Noten</span> verbessern.
+							</div>
+							<div className="flex flex-col space-y-4">
+								<div className="font-medium break-words w-96">
+									Du hast es satt schlechte Noten zu schreiben, hast aber jetzt
+									die Motivation dich zu verbessern ✅
+								</div>
+								<div className="flex flex-col space-y-1 text-sm">
+									<div>Erhalte Nachhilfe in:</div>
+
+									<div className="flex space-x-2">
+										{subjects.map((subject) => (
+											<div
+												key={subject.abbreviation}
+												className="px-1 font-semibold text-red-800 bg-red-100 border border-red-800 rounded-sm"
+											>
+												{subject.abbreviation}
+											</div>
+										))}
+									</div>
+								</div>
+
+								<Link href="/contact">
+									<a className="self-start px-5 py-3 font-bold tracking-wider text-center text-white uppercase rounded bg-dark hover:bg-primary">
+										Kontaktieren
+									</a>
+								</Link>
+							</div>
+						</div>
+					</div>
+					<div className="flex self-center">
+						<Image
+							src="/exams_illustration.svg"
+							layout="fixed"
+							height={400}
+							width={600}
+						/>
+					</div>
+				</div>
+			</main>
+		</>
 	);
+}
+
+export async function getStaticProps() {
+	const subjects = await prisma.subject.findMany();
+
+	return {
+		props: {
+			subjects,
+		},
+	};
 }

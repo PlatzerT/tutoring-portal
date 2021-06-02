@@ -5,7 +5,7 @@ import prisma from 'lib/prisma';
 
 export default function ContactPage({ subjects }) {
 	return (
-		<div>
+		<div className="h-full">
 			<Menu />
 			<h1 className="hidden mb-5 text-5xl font-bold md:flex text-dark">
 				Kontaktiere mich! 💬
