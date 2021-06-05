@@ -2,14 +2,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import prisma from 'lib/prisma';
 import Menu from 'components/menu/Menu';
-import Button from '../components/Button';
 import Link from 'next/link';
 
 export default function Home({ subjects }) {
-	// 'Leistung steigern' 'Noten verbessern' 'Klassenbester werden'
-	/**
-	 * N
-	 */
 	return (
 		<>
 			<Menu />
@@ -33,7 +28,7 @@ export default function Home({ subjects }) {
 										{subjects.map((subject) => (
 											<div
 												key={subject.abbreviation}
-												className="px-1 font-semibold text-red-800 bg-red-100 border border-red-800 rounded-sm"
+												className="px-1 font-semibold text-gray-800 bg-gray-100 border border-gray-800 rounded-sm"
 											>
 												{subject.abbreviation}
 											</div>

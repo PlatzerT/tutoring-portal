@@ -7,7 +7,7 @@ export default function ContactPage({ subjects }) {
 	return (
 		<div className="h-full">
 			<Menu />
-			<h1 className="hidden mb-5 text-5xl font-bold md:flex text-dark">
+			<h1 className="hidden mb-10 text-5xl font-bold md:flex text-dark">
 				Kontaktiere mich! 💬
 			</h1>
 			<ContactForm subjects={subjects} />

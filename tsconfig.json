@@ -19,6 +19,13 @@
 			"@/lib/*": ["lib/*"]
 		}
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"components/news/NewsList.js",
+		"components/news/NewsItemModal.js",
+		"components/news/NewsItem.js"
+	],
 	"exclude": ["node_modules"]
 }

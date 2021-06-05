@@ -50,11 +50,6 @@ export default function ContactForm({ subjects }) {
 		};
 		const res = await axios.post('/api/contact', form, config);
 	}
-
-	function loadFile(e) {
-		const target = e.currentTarget;
-		setFiles(target.files);
-	}
 	return (
 		<div className="w-full md:justify-between md:space-x-16 md:flex">
 			<form
@@ -122,51 +117,10 @@ export default function ContactForm({ subjects }) {
 						</div>
 					)}
 				</div>
-				{/*<div className="flex-1">
-					<div>Dateien</div>
-					<label
-						className={`flex ${
-							files ? 'bg-purple-100 ' : ''
-						} hover:bg-purple-50 cursor-pointer duration-75 items-center justify-center w-full px-2 overflow-auto space-x-2 align-top transition-all ease-in border-2 border-black border-dashed hover:border-solid rounded-r-md rounded-b-md`}
-					>
-						<input
-							type="file"
-							name="file"
-							className="hidden"
-							onChange={loadFile}
-							multiple
-							required
-						/>
-						{files ? (
-							<div className="items-center justify-center hidden w-5/6 space-x-5 font-semibold sm:flex">
-								{displayedFiles.map((file) => {
-									if (file.type.startsWith('image')) {
-										return (
-											<img
-												key={file.name}
-												src={URL.createObjectURL(file)}
-												height="40"
-												width="60"
-											/>
-										);
-									} else {
-										return '';
-									}
-								})}
-
-								<div>{files.name}</div>
-							</div>
-						) : (
-							<div className="flex items-center space-x-2">
-								<Image src="/file_icon.svg" height={24} width={25.13} />
-								<div>Upload</div>
-							</div>
-						)}
-					</label>
-				</div>*/}
-				<Button label="Absenden" type="submit" disabled={false} />
+				<Button type="submit" disabled={false} additionalClasses="h-16">
+					Absenden
+				</Button>
 			</form>
-			{/**grid min-h-0 grid-cols-2 gap-4 p-3 overflow-auto lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 */}
 			<div className="flex-1 hidden md:flex md:flex-col">
 				<div
 					{...getRootProps()}
