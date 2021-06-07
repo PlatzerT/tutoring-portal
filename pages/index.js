@@ -3,10 +3,12 @@ import Image from 'next/image';
 import prisma from 'lib/prisma';
 import Menu from 'components/menu/Menu';
 import Link from 'next/link';
+import Header from '../components/Header';
 
 export default function Home({ subjects }) {
 	return (
 		<>
+			<Header />
 			<Menu />
 			<main className="flex flex-col justify-center">
 				<div className="space-y-8 sm:space-y-16 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mt-28">
@@ -46,7 +48,7 @@ export default function Home({ subjects }) {
 					</div>
 					<div className="flex self-center">
 						<Image
-							src="/exams_illustration.svg"
+							src="/assets/exams_illustration.svg"
 							layout="fixed"
 							height={400}
 							width={600}

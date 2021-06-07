@@ -22,10 +22,11 @@ model Contact {
 
 model File {
   id        Int     @id @default(autoincrement())
+  name      String
   contact   Contact @relation(references: [id], fields: [contactId])
   contactId Int
   subject   String
-  imagePath String
+  filePath  String
 }
 
 model Subject {

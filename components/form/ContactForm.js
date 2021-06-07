@@ -135,7 +135,7 @@ export default function ContactForm({ subjects }) {
 						</div>
 					) : (
 						<div className="flex flex-col items-center p-3 space-y-1 font-bold uppercase bg-purple-300 rounded-lg text-dark">
-							<Image src="/file_icon.svg" height={24} width={25.13} />
+							<Image src="/assets/file_icon.svg" height={24} width={25.13} />
 							<div>Drop here</div>
 						</div>
 					)}

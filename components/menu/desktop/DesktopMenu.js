@@ -13,7 +13,7 @@ export default function DesktopMenu() {
 				<Link href="/">
 					<div className="flex p-1 rounded hover:bg-purple-100">
 						<Image
-							src="/logo_mobile_light_mode.svg"
+							src="/assets/logo_mobile_light_mode.svg"
 							width={32}
 							height={32}
 							layout="fixed"
@@ -44,7 +44,7 @@ export default function DesktopMenu() {
 				/>
 				<Link href="/contact">
 					<a className="flex p-3 rounded-md bg-primary hover:bg-dark">
-						<Image src="/pencil-fill.svg" height={20} width={20} />
+						<Image src="/assets/pencil-fill.svg" height={20} width={20} />
 					</a>
 				</Link>
 				{/*<DesktopMenuItem

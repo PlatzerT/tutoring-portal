@@ -1,7 +1,9 @@
 import multer from 'multer';
 import initMiddleware from '../../../lib/initMiddleware';
 import fs from 'fs';
+import path from 'path';
 import prisma from 'lib/prisma';
+import mime from 'mime-types';
 
 export const config = {
 	api: {
@@ -9,14 +11,28 @@ export const config = {
 	},
 };
 
+const root = process.cwd();
+
 var upload = multer();
 const multerAny = initMiddleware(upload.any());
 
 export default async (req, res) => {
 	await multerAny(req, res);
-	const { files } = req;
+
+	if (req.method === 'GET') {
+		const { filePath } = req.body;
+		const p = path.join(root, filePath);
+		const fileBuffer = fs.readFileSync(p, { getFileType: true });
+		const ext = p.slice(p.indexOf('.'));
+
+		res.setHeader('Content-Type', mime.lookup(ext));
+		res.send(fileBuffer);
+		res.end();
+		return;
+	}
 
 	if (req.method === 'POST') {
+		const { files } = req;
 		let { name, email, subjectID, message } = req.body;
 		subjectID = parseInt(subjectID);
 
@@ -27,17 +43,19 @@ export default async (req, res) => {
 		});
 
 		// Format folder name
-		const formattedName = name
+		let formattedName = name
 			.toUpperCase()
 			.replace(' ', '_')
-			.concat('__', email.replace('@', '_'));
+			.concat('__', email.replace('@', '_').replace('-', '_'))
+			.replace('.', '_');
+		console.log(formattedName);
 
 		// Format files in request correctly
 		let formattedFiles = [];
 		formattedFiles = files.map((file) => {
 			const fileName = file.originalname;
 			return {
-				imagePath: `/contacts/${formattedName}/${subject.abbreviation}/${fileName}`,
+				filePath: `contacts/${formattedName}/${subject.abbreviation}/${fileName}`,
 				subject: subject.abbreviation,
 				fileName: fileName,
 			};
@@ -58,7 +76,8 @@ export default async (req, res) => {
 				},
 				files: {
 					create: formattedFiles.map((file) => ({
-						imagePath: file.imagePath,
+						name: file.fileName,
+						filePath: file.filePath,
 						subject: file.subject,
 					})),
 				},
@@ -71,16 +90,17 @@ export default async (req, res) => {
 				},
 				files: {
 					create: formattedFiles.map((file) => ({
-						imagePath: file.imagePath,
+						name: file.fileName,
+						filePath: file.filePath,
 						subject: file.subject,
 					})),
 				},
 			},
 		});
 
-		// Create directory in /public
+		// Create directory in /contacts
 		fs.mkdirSync(
-			`./public/contacts/${formattedName}/${subject.abbreviation}`,
+			`./contacts/${formattedName}/${subject.abbreviation}`,
 			{ recursive: true },
 			(err) => {
 				if (err) {
@@ -91,13 +111,13 @@ export default async (req, res) => {
 			}
 		);
 
-		// Create file in /public/.../...
+		// Create file in /contacts/.../...
 		try {
 			for (let i = 0; i < formattedFiles.length; i++) {
 				const buffer = files[i].buffer;
 
 				fs.writeFileSync(
-					`./public/contacts/${formattedName}/${subject.abbreviation}/${formattedFiles[i].fileName}`,
+					`./contacts/${formattedName}/${subject.abbreviation}/${formattedFiles[i].fileName}`,
 					buffer
 				);
 			}

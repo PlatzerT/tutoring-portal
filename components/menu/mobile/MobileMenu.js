@@ -14,14 +14,18 @@ export default function MobileMenu() {
 			<div className="flex cursor-pointer">
 				<Link href="/">
 					<div className="flex p-1 rounded hover:bg-purple-100">
-						<Image src="/logo_mobile_light_mode.svg" width={32} height={32} />
+						<Image
+							src="/assets/logo_mobile_light_mode.svg"
+							width={32}
+							height={32}
+						/>
 					</div>
 				</Link>
 			</div>
 
 			<div className="flex p-2 rounded-lg hover:bg-purple-100">
 				<Image
-					src="/menu_mobile_light_mode.svg "
+					src="/assets/menu_mobile_light_mode.svg "
 					width={32}
 					height={32}
 					className="cursor-pointer"
@@ -37,28 +41,28 @@ export default function MobileMenu() {
 								className="fixed flex p-2 rounded-lg cursor-pointer hover:bg-purple-100 right-8 top-10"
 								onClick={() => setShowMenu(!showMenu)}
 							>
-								<Image src="/close.svg" height={32} width={32} />
+								<Image src="/assets/close.svg" height={32} width={32} />
 							</div>
 							<MobileMenuItem
-								iconPath="/news.svg"
+								iconPath="/assets/news.svg"
 								to="/news"
 								label="News"
 								additionalClasses={normalLinkStyles}
 							/>
 							<MobileMenuItem
-								iconPath="/sitemap.svg"
+								iconPath="/assets/sitemap.svg"
 								to="/sitemap"
 								label="Sitemap"
 								additionalClasses={normalLinkStyles}
 							/>
 							<MobileMenuItem
-								iconPath="/imprint.svg"
+								iconPath="/assets/imprint.svg"
 								to="/imprint"
 								label="Impressum"
 								additionalClasses={normalLinkStyles}
 							/>
 							<MobileMenuItem
-								iconPath="/downloads.svg"
+								iconPath="/assets/downloads.svg"
 								to="/imprint"
 								label="Downloads"
 								additionalClasses={normalLinkStyles}
@@ -66,7 +70,7 @@ export default function MobileMenu() {
 							<MobileMenuItem
 								to="/contact"
 								label="KONTAKTIEREN"
-								additionalClasses="bg-primary text-white font-semibold text-lg hover:opacity-90 justify-start"
+								additionalClasses="bg-primary self-start text-white font-semibold text-lg hover:opacity-90 justify-start"
 							/>
 						</div>
 					</div>
