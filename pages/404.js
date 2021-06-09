@@ -6,7 +6,12 @@ export default function NotFoundPage() {
 		<div className="flex items-center justify-center h-full">
 			<Header title="Error" />
 			<div className="flex flex-col space-y-5 text-center">
-				<Image src="/assets/404.png" height={300} width={550} />
+				<Image
+					src="/assets/404.png"
+					height={300}
+					width={550}
+					alt="Loading..."
+				/>
 				<div className="text-lg font-bold text-dark">
 					Diese Seite existiert nicht
 				</div>

@@ -15,6 +15,7 @@ export default function MobileMenu() {
 				<Link href="/">
 					<div className="flex p-1 rounded hover:bg-purple-100">
 						<Image
+							alt="Loading..."
 							src="/assets/logo_mobile_light_mode.svg"
 							width={32}
 							height={32}
@@ -25,6 +26,7 @@ export default function MobileMenu() {
 
 			<div className="flex p-2 rounded-lg hover:bg-purple-100">
 				<Image
+					alt="Loading..."
 					src="/assets/menu_mobile_light_mode.svg "
 					width={32}
 					height={32}
@@ -41,7 +43,12 @@ export default function MobileMenu() {
 								className="fixed flex p-2 rounded-lg cursor-pointer hover:bg-purple-100 right-8 top-10"
 								onClick={() => setShowMenu(!showMenu)}
 							>
-								<Image src="/assets/close.svg" height={32} width={32} />
+								<Image
+									alt="Loading..."
+									src="/assets/close.svg"
+									height={32}
+									width={32}
+								/>
 							</div>
 							<MobileMenuItem
 								iconPath="/assets/news.svg"

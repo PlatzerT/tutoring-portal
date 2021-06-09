@@ -15,7 +15,7 @@ export default function MobileMenuItem({
 			>
 				{iconPath && (
 					<div className="flex">
-						<Image src={iconPath} height={32} width={32} />
+						<Image alt="Loading..." src={iconPath} height={32} width={32} />
 					</div>
 				)}
 

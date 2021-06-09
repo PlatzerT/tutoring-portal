@@ -3,7 +3,7 @@ import Image from 'next/image';
 import prisma from 'lib/prisma';
 import Menu from 'components/menu/Menu';
 import Link from 'next/link';
-import Header from '../components/Header';
+import Header from 'components/Header';
 import Layout from '../components/Layout';
 
 export default function Home({ subjects }) {
@@ -52,6 +52,7 @@ export default function Home({ subjects }) {
 					</div>
 					<div className="flex self-center">
 						<Image
+							alt="Loading..."
 							src="/assets/exams_illustration.svg"
 							layout="fixed"
 							height={400}
@@ -61,7 +62,12 @@ export default function Home({ subjects }) {
 				</div>
 			</main>
 			<div className="hidden sm:flex">
-				<Image src="/assets/bg_dark.svg" layout="fill" objectFit="cover" />
+				<Image
+					alt="Loading..."
+					src="/assets/bg_dark.svg"
+					layout="fill"
+					objectFit="cover"
+				/>
 			</div>
 		</div>
 	);

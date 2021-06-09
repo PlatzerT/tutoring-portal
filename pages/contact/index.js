@@ -2,7 +2,7 @@ import React from 'react';
 import ContactForm from 'components/form/ContactForm';
 import Menu from 'components/menu/Menu';
 import prisma from 'lib/prisma';
-import Header from '../../components/Header';
+import Header from 'components/Header';
 
 export default function ContactPage({ subjects }) {
 	return (

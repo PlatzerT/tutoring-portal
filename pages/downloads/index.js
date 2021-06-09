@@ -1,6 +1,7 @@
 import React from 'react';
 import Menu from 'components/menu/Menu';
 import DownloadableFilesList from 'components/downloads/DownloadableFilesList';
+import Header from 'components/Header';
 
 export default function DownloadsPage({ downloadableFiles }) {
 	return (

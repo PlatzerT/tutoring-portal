@@ -10,6 +10,7 @@ export default function Footer() {
 				<div className="flex-shrink-0 w-64 mx-auto mt-10 text-center md:mx-0 md:text-left md:mt-0">
 					<a className="flex items-center justify-center font-medium text-white md:justify-start">
 						<Image
+							alt="Loading..."
 							src="/assets/logo_mobile_dark_mode.svg"
 							height={30}
 							width={30}

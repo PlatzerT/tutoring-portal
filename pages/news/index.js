@@ -2,6 +2,7 @@ import React from 'react';
 import Menu from 'components/menu/Menu';
 import prisma from 'lib/prisma';
 import NewsList from 'components/news/NewsList';
+import Header from 'components/Header';
 
 export default function NewsPage({ news }) {
 	return (

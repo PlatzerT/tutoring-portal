@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from 'components/menu/Menu';
+import Header from 'components/Header';
 
 export default function ImprintPage() {
 	return (
