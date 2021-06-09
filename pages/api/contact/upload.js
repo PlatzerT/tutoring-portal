@@ -37,7 +37,6 @@ export default async (req, res) => {
 		.replace(' ', '_')
 		.concat('__', email.replace('@', '_').replace('-', '_'))
 		.replace('.', '_');
-	console.log(formattedName);
 
 	// Format files in request correctly
 	let formattedFiles = [];

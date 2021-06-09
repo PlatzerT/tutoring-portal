@@ -8,17 +8,17 @@ import Layout from '../components/Layout';
 
 export default function Home({ subjects }) {
 	return (
-		<div>
+		<div className="flex flex-col h-full ">
 			<Header />
 			<div className="relative z-50">
 				<Menu />
 			</div>
 
-			<main className="relative z-10">
-				<div className="space-y-0 sm:space-y-1 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mt-12">
+			<main className="relative z-10 flex flex-col justify-start lg:flex-1 lg:justify-center bb">
+				<div className="space-y-0 sm:space-y-1 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mb-16">
 					{/* Hero section */}
 					<div className="flex flex-col items-center justify-center">
-						<div className="flex flex-col w-full space-y-3">
+						<div className="flex flex-col w-full space-y-5">
 							<div className="text-5xl font-bold">
 								<span className="text-primary">Noten</span> verbessern.
 							</div>
@@ -30,7 +30,7 @@ export default function Home({ subjects }) {
 								<div className="flex flex-col space-y-1 text-sm">
 									<div>Erhalte Nachhilfe in:</div>
 
-									<div className="flex space-x-2">
+									<div className="flex space-x-3">
 										{subjects.map((subject) => (
 											<div
 												key={subject.abbreviation}
@@ -60,7 +60,9 @@ export default function Home({ subjects }) {
 					</div>
 				</div>
 			</main>
-			<Image src="/assets/bg_dark.svg" layout="fill" objectFit="cover" />
+			<div className="hidden sm:flex">
+				<Image src="/assets/bg_dark.svg" layout="fill" objectFit="cover" />
+			</div>
 		</div>
 	);
 }

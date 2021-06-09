@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
 	return (
-		<div className="h-screen">
+		<div className="h-screen ">
 			<Layout>
 				<Component {...pageProps} />
 			</Layout>

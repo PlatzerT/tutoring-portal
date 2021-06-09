@@ -7,7 +7,6 @@ const root = process.cwd();
 
 export default function TestPage() {
 	const [url, setUrl] = useState('');
-	console.log('URL: ', url);
 	async function download(e) {
 		e.preventDefault();
 		fetch('/api/news/download', {

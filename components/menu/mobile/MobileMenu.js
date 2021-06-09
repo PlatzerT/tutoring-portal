@@ -56,6 +56,12 @@ export default function MobileMenu() {
 								additionalClasses={normalLinkStyles}
 							/>
 							<MobileMenuItem
+								iconPath="/assets/location.svg"
+								to="/location"
+								label="Lageplan"
+								additionalClasses={normalLinkStyles}
+							/>
+							<MobileMenuItem
 								iconPath="/assets/imprint.svg"
 								to="/imprint"
 								label="Impressum"

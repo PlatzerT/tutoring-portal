@@ -14,7 +14,6 @@ export default async (req, res) => {
 	}
 
 	const { filePath } = req.body;
-	console.log(filePath);
 	const p = path.join(root, filePath);
 	const fileBuffer = fs.readFileSync(p);
 	const ext = p.slice(p.indexOf('.'));

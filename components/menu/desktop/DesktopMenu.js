@@ -33,6 +33,11 @@ export default function DesktopMenu() {
 					additionalClasses={normalLinkStyles}
 				/>
 				<DesktopMenuItem
+					label="Lageplan"
+					to="/location"
+					additionalClasses={normalLinkStyles}
+				/>
+				<DesktopMenuItem
 					label="Impressum"
 					to="/imprint"
 					additionalClasses={normalLinkStyles}

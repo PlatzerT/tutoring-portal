@@ -12,8 +12,8 @@ export default function NewsItem({ details }) {
 	}
 
 	return (
-		<div className="relative h-80">
-			<Image src={imagePath} layout="fill" objectFit="cover" />
+		<div className="relative">
+			<Image src={imagePath} layout="responsive" height={600} width={900} />
 			<div
 				className="absolute inset-0 flex flex-col justify-start p-4 transition-all duration-100 bg-black cursor-pointer hover:bg-opacity-30 bg-opacity-60"
 				onClick={toggleModal}
