@@ -6,23 +6,15 @@ import Image from 'next/image';
 const root = process.cwd();
 
 export default function TestPage() {
-	const [url, setUrl] = useState('');
+	const [url, setUrl] = useState(null);
 	async function download(e) {
 		e.preventDefault();
-		fetch('/api/news/download', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ imagePath: 'news/OK/AKG127067.jpg' }),
-		})
-			.then((res) => {
-				return res.blob();
-			})
-			.then((blob) => {
-				let url = URL.createObjectURL(blob);
-				setUrl(url);
-			});
+		const res = await fetch('/api/news');
+		const info = await res.json();
+		console.log(info[0].coverPath);
+		setUrl(
+			`${process.env.NEXT_PUBLIC_BASE_URL}${require('../news/1/cover.jpg')}`
+		);
 	}
 
 	async function upload(e) {
@@ -44,7 +36,8 @@ export default function TestPage() {
 	}
 	return (
 		<div>
-			<img id="ok" src={url} height="100" />
+			{url && <img id="ok" src={url} height="100" />}
+
 			<button onClick={download}>DL</button>
 			<input type="file" name="file" accept="image/*" onChange={upload} />
 		</div>

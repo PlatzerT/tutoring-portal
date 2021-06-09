@@ -8,7 +8,7 @@ export default function DownloadsPage({ downloadableFiles }) {
 		<div className="text-dark">
 			<Header title="Nachhilfe | Downloads" />
 			<Menu />
-			<h1 className="mb-10 text-5xl font-bold">Downloads</h1>
+			<h1 className="h1">Downloads</h1>
 			<hr />
 			<div className="my-4">
 				<DownloadableFilesList files={downloadableFiles} />
@@ -18,28 +18,14 @@ export default function DownloadsPage({ downloadableFiles }) {
 }
 
 export async function getStaticProps() {
-	const downloadableFiles = await prisma.download.findMany({
-		select: {
-			id: true,
-			fileName: true,
-			filePath: true,
-			createdAt: true,
-		},
-	});
-	let formattedDownloadableFiles = [];
-	if (downloadableFiles) {
-		formattedDownloadableFiles = downloadableFiles.map(
-			(downloadableFileItem) => {
-				const { createdAt, ...rest } = downloadableFileItem;
-				const stringifiedDate = createdAt.toString();
-				return { createdAt: stringifiedDate, ...rest };
-			}
-		);
-	}
+	const res = await fetch(
+		`${process.env.NEXT_PUBLIC_BASE_URL}/api/downloadable-files`
+	);
+	const downloadableFiles = await res.json();
 
 	return {
 		props: {
-			downloadableFiles: formattedDownloadableFiles,
+			downloadableFiles,
 		},
 	};
 }

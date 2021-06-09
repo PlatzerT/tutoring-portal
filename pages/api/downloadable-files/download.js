@@ -2,9 +2,7 @@ import multer from 'multer';
 import initMiddleware from '../../../lib/initMiddleware';
 import fs from 'fs';
 import path from 'path';
-import prisma from 'lib/prisma';
 import mime from 'mime-types';
-import { Prisma } from '.prisma/client';
 
 const root = process.cwd();
 
@@ -14,9 +12,8 @@ export default async (req, res) => {
 	}
 
 	const { filePath } = req.body;
-	const p = path.join(root, filePath);
-	const fileBuffer = fs.readFileSync(p);
-	const ext = p.slice(p.indexOf('.'));
+	const fileBuffer = fs.readFileSync(filePath);
+	const ext = filePath.slice(filePath.indexOf('.'));
 
 	res.setHeader('Content-Type', mime.lookup(ext));
 	res.send(fileBuffer);

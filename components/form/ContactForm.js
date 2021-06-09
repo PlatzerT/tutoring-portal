@@ -12,7 +12,7 @@ export default function ContactForm({ subjects }) {
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
 	const [selectedSubject, setSelectedSubject] = useState(
-		subjects[0].id || null
+		subjects[0].abbreviation || null
 	);
 	const [files, setFiles] = useState([]);
 	const [displayedFiles, setDisplayedFiles] = useState([]);
@@ -40,7 +40,7 @@ export default function ContactForm({ subjects }) {
 		form.append('name', name);
 		form.append('email', email);
 		form.append('message', message);
-		form.append('subjectID', selectedSubject);
+		form.append('subject', selectedSubject);
 		for (let i = 0; i < files.length; i++) {
 			form.append(files[i].name, files[i]);
 		}
@@ -91,7 +91,7 @@ export default function ContactForm({ subjects }) {
 						onChange={(e) => setSelectedSubject(e.currentTarget.value)}
 					>
 						{subjects.map((subject) => (
-							<option key={subject.id} value={subject.id}>
+							<option key={subject.abbreviation} value={subject.abbreviation}>
 								{subject.fullName}
 							</option>
 						))}

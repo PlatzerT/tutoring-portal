@@ -1,5 +1,3 @@
-module.exports = {
-	images: {
-		domains: ['localhost', ''],
-	},
-};
+const withImages = require('next-images');
+
+module.exports = withImages();

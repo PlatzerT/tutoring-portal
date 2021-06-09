@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import Button from 'components/Button';
 
 export default function NewsItemModal({ details, onClick }) {
-	const { imagePath, title, body } = details;
-	const createdAt = new Date(details.createdAt);
+	const { coverPath, title, content } = details;
+	const updatedAt = new Date(details.updatedAt);
 	return (
 		<div
 			className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 text-dark"
@@ -15,7 +15,7 @@ export default function NewsItemModal({ details, onClick }) {
 				onClick={(e) => e.stopPropagation()}
 			>
 				<div className="relative">
-					<img src={imagePath} />
+					<img src={coverPath} />
 				</div>
 				<div className="flex flex-col space-y-4">
 					<div className="flex justify-between">
@@ -23,12 +23,12 @@ export default function NewsItemModal({ details, onClick }) {
 							{title}
 						</div>
 						<div className="text-sm text-gray-500">
-							{createdAt.toLocaleString('default', { month: 'short' })}{' '}
-							{createdAt.getDate()}, {createdAt.getFullYear()} ▪︎{' '}
-							{createdAt.getHours()}:{createdAt.getMinutes()}
+							{updatedAt.toLocaleString('default', { month: 'short' })}{' '}
+							{updatedAt.getDate()}, {updatedAt.getFullYear()} ▪︎{' '}
+							{updatedAt.getHours()}:{updatedAt.getMinutes()}
 						</div>
 					</div>
-					<div className="overflow-y-scroll h-60">{body}</div>
+					<div className="overflow-y-scroll h-60">{content}</div>
 				</div>
 				<Button
 					type="button"

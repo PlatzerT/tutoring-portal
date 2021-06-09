@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import prisma from 'lib/prisma';
+
 import Menu from 'components/menu/Menu';
 import Link from 'next/link';
 import Header from 'components/Header';
 import Layout from '../components/Layout';
+import axios from 'axios';
 
 export default function Home({ subjects }) {
 	return (
@@ -74,7 +75,8 @@ export default function Home({ subjects }) {
 }
 
 export async function getStaticProps() {
-	const subjects = await prisma.subject.findMany();
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/subjects`);
+	const subjects = await res.json();
 
 	return {
 		props: {

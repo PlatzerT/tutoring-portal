@@ -7,7 +7,7 @@ export default function ImprintPage() {
 		<div className="text-dark">
 			<Header title="Nachhilfe | Impressum" />
 			<Menu />
-			<h1 className="mb-10 text-5xl font-bold md:flex text-dark">Impressum</h1>
+			<h1 className="h1 md:flex">Impressum</h1>
 			<div className="flex flex-col space-y-6">
 				<div>
 					<div className="font-bold">TPlatzer</div>

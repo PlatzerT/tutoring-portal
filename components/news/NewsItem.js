@@ -3,8 +3,8 @@ import Image from 'next/image';
 import NewsItemModal from './NewsItemModal';
 
 export default function NewsItem({ details }) {
-	const { imagePath, title } = details;
-	const createdAt = new Date(details.createdAt);
+	const { coverPath, title } = details;
+	const updatedAt = new Date(details.updatedAt);
 	const [showModal, setShowModal] = useState(false);
 
 	function toggleModal(e) {
@@ -14,7 +14,7 @@ export default function NewsItem({ details }) {
 	return (
 		<div className="relative">
 			<img
-				src={imagePath}
+				src={coverPath}
 				alt="Loading..."
 				layout="responsive"
 				height={600}
@@ -26,9 +26,9 @@ export default function NewsItem({ details }) {
 			>
 				<div className="text-white">
 					<div>
-						{createdAt.toLocaleString('default', { month: 'short' })}{' '}
-						{createdAt.getDate()}, {createdAt.getFullYear()} ▪︎{' '}
-						{createdAt.getHours()}:{createdAt.getMinutes()}
+						{updatedAt.toLocaleString('default', { month: 'short' })}{' '}
+						{updatedAt.getDate()}, {updatedAt.getFullYear()} ▪︎{' '}
+						{updatedAt.getHours()}:{updatedAt.getMinutes()}
 					</div>
 					<h2 className="mt-8 text-3xl font-semibold">{title}</h2>
 				</div>

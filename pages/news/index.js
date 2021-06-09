@@ -1,10 +1,11 @@
 import React from 'react';
 import Menu from 'components/menu/Menu';
-import prisma from 'lib/prisma';
+
 import NewsList from 'components/news/NewsList';
 import Header from 'components/Header';
 
 export default function NewsPage({ news }) {
+	console.log(news);
 	return (
 		<div>
 			<Header title="Nachhilfe | News" />
@@ -19,27 +20,12 @@ export default function NewsPage({ news }) {
 }
 
 export async function getStaticProps() {
-	const news = await prisma.news.findMany({
-		select: {
-			id: true,
-			title: true,
-			body: true,
-			imagePath: true,
-			createdAt: true,
-		},
-	});
-	let formattedNews = [];
-	if (news) {
-		formattedNews = news.map((newsItem) => {
-			const { createdAt, ...rest } = newsItem;
-			const stringifiedDate = createdAt.toString();
-			return { createdAt: stringifiedDate, ...rest };
-		});
-	}
-
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/news`);
+	const news = await res.json();
+	console.log(news);
 	return {
 		props: {
-			news: formattedNews,
+			news,
 		},
 	};
 }

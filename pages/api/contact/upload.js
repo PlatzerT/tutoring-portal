@@ -2,7 +2,7 @@ import multer from 'multer';
 import initMiddleware from '../../../lib/initMiddleware';
 import fs from 'fs';
 import path from 'path';
-import prisma from 'lib/prisma';
+
 import mime from 'mime-types';
 
 export const config = {
@@ -22,81 +22,13 @@ export default async (req, res) => {
 	}
 
 	const { files } = req;
-	let { name, email, subjectID, message } = req.body;
-	subjectID = parseInt(subjectID);
+	let { name, email, subject, message } = req.body;
 
-	const subject = await prisma.subject.findUnique({
-		where: {
-			id: subjectID,
-		},
-	});
-
-	// Format folder name
-	let formattedName = name
-		.toUpperCase()
-		.replace(' ', '_')
-		.concat('__', email.replace('@', '_').replace('-', '_'))
-		.replace('.', '_');
-
-	// Format files in request correctly
-	let formattedFiles = [];
-	formattedFiles = files.map((file) => {
-		const fileName = file.originalname;
-		return {
-			filePath: `contacts/${formattedName}/${subject.abbreviation}/${fileName}`,
-			subject: subject.abbreviation,
-			fileName: fileName,
-		};
-	});
-
-	try {
-		// Write to database
-		await prisma.contact.upsert({
-			where: {
-				email: email,
-			},
-			create: {
-				name: name,
-				email: email,
-				subjects: {
-					connect: {
-						id: subjectID,
-					},
-				},
-				files: {
-					create: formattedFiles.map((file) => ({
-						name: file.fileName,
-						filePath: file.filePath,
-						subject: file.subject,
-					})),
-				},
-			},
-			update: {
-				subjects: {
-					connect: {
-						id: subjectID,
-					},
-				},
-				files: {
-					create: formattedFiles.map((file) => ({
-						name: file.fileName,
-						filePath: file.filePath,
-						subject: file.subject,
-					})),
-				},
-			},
-		});
-	} catch (err) {
-		if (err instanceof Prisma.PrismaClientKnownRequestError) {
-			if (err.code === 'P2002') {
-				return res.status(400).json('Each file must have a unique name!');
-			}
-		}
-	}
+	let formattedName = email + '(' + name + ')';
 
 	// Create directory in /contacts
 	fs.mkdirSync(
-		`./contacts/${formattedName}/${subject.abbreviation}`,
+		`./contacts/${formattedName}/${subject}`,
 		{ recursive: true },
 		(err) => {
 			if (err) {
@@ -107,23 +39,28 @@ export default async (req, res) => {
 		}
 	);
 
+	try {
+		fs.writeFileSync(
+			`./contacts/${formattedName}/${subject}/_message.txt`,
+			message
+		);
+	} catch (err) {
+		return res.status(400).send('Something went wrong uploading!');
+	}
+
 	// Create file in /contacts/.../...
 	try {
-		for (let i = 0; i < formattedFiles.length; i++) {
+		for (let i = 0; i < files.length; i++) {
 			const buffer = files[i].buffer;
 
 			fs.writeFileSync(
-				`./contacts/${formattedName}/${subject.abbreviation}/${formattedFiles[i].fileName}`,
+				`./contacts/${formattedName}/${subject}/${files[i].originalname}`,
 				buffer
 			);
 		}
 	} catch (err) {
 		return res.status(400).send('Something went wrong uploading!');
 	}
-
-	/**
-	 * TODO: Send success email to contact
-	 */
-
+	res.setHeader('Content-type', 'text/plain');
 	res.status(200).send('Form uploaded!');
 };
