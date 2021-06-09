@@ -38,8 +38,15 @@ model Subject {
 
 model News {
   id        Int      @id @default(autoincrement())
-  title     String
+  title     String   @unique
   body      String
   imagePath String
+  createdAt DateTime @default(now())
+}
+
+model Download {
+  id        Int      @id @default(autoincrement())
+  fileName  String   @unique
+  filePath  String   @unique
   createdAt DateTime @default(now())
 }

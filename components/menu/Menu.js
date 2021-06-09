@@ -4,7 +4,7 @@ import MobileMenu from './mobile/MobileMenu';
 
 export default function Menu() {
 	return (
-		<div className="pt-10 pb-20">
+		<div className="self-start w-full pt-10 pb-20">
 			<div className="md:hidden">
 				<MobileMenu />
 			</div>

@@ -4,14 +4,18 @@ import prisma from 'lib/prisma';
 import Menu from 'components/menu/Menu';
 import Link from 'next/link';
 import Header from '../components/Header';
+import Layout from '../components/Layout';
 
 export default function Home({ subjects }) {
 	return (
-		<>
+		<div>
 			<Header />
-			<Menu />
-			<main className="flex flex-col justify-center">
-				<div className="space-y-8 sm:space-y-16 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mt-28">
+			<div className="relative z-50">
+				<Menu />
+			</div>
+
+			<main className="relative z-10">
+				<div className="space-y-0 sm:space-y-1 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mt-12">
 					{/* Hero section */}
 					<div className="flex flex-col items-center justify-center">
 						<div className="flex flex-col w-full space-y-3">
@@ -19,7 +23,7 @@ export default function Home({ subjects }) {
 								<span className="text-primary">Noten</span> verbessern.
 							</div>
 							<div className="flex flex-col space-y-4">
-								<div className="font-medium break-words w-96">
+								<div className="font-medium w-96">
 									Du hast es satt schlechte Noten zu schreiben, hast aber jetzt
 									die Motivation dich zu verbessern ✅
 								</div>
@@ -51,12 +55,13 @@ export default function Home({ subjects }) {
 							src="/assets/exams_illustration.svg"
 							layout="fixed"
 							height={400}
-							width={600}
+							width={400}
 						/>
 					</div>
 				</div>
 			</main>
-		</>
+			<Image src="/assets/bg_dark.svg" layout="fill" objectFit="cover" />
+		</div>
 	);
 }
 

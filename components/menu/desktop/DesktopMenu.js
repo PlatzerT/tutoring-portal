@@ -47,11 +47,6 @@ export default function DesktopMenu() {
 						<Image src="/assets/pencil-fill.svg" height={20} width={20} />
 					</a>
 				</Link>
-				{/*<DesktopMenuItem
-					label="Kontaktieren"
-					to="/contact"
-					additionalClasses="bg-primary text-sm text-white font-bold hover:opacity-90 uppercase"
-				/>*/}
 			</div>
 		</div>
 	);

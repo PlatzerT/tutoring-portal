@@ -5,6 +5,7 @@ import FileShowcase from './FileShowcase';
 import InputField from './InputField';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function ContactForm({ subjects }) {
 	const [name, setName] = useState('');
@@ -15,6 +16,7 @@ export default function ContactForm({ subjects }) {
 	);
 	const [files, setFiles] = useState([]);
 	const [displayedFiles, setDisplayedFiles] = useState([]);
+	const router = useRouter();
 
 	var isValid = name.length > 0 && email.length > 0 && message.length > 0;
 
@@ -48,7 +50,10 @@ export default function ContactForm({ subjects }) {
 				'Content-Type': 'multipart/form-data',
 			},
 		};
-		const res = await axios.post('/api/contact', form, config);
+		const res = await axios.post('/api/contact/upload', form, config);
+		if (res.status === 200) {
+			router.push('/');
+		}
 	}
 	return (
 		<div className="w-full md:justify-between md:space-x-16 md:flex">

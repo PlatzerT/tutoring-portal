@@ -4,13 +4,14 @@ import prisma from 'lib/prisma';
 import NewsList from 'components/news/NewsList';
 
 export default function NewsPage({ news }) {
-	console.log(news);
 	return (
 		<div>
 			<Menu />
-			<div className="text-5xl font-bold text-dark">News</div>
-			<hr className="mt-10 mb-4" />
-			<NewsList news={news} />
+			<div className="mb-10 text-5xl font-bold text-dark">News</div>
+			<hr />
+			<div className="my-4">
+				<NewsList news={news} />
+			</div>
 		</div>
 	);
 }

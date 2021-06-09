@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import NewsItemModal from './NewsItemModal';
 
 export default function NewsItem({ details }) {
-	const { imagePath, title, body } = details;
+	const { imagePath, title } = details;
 	const createdAt = new Date(details.createdAt);
 	const [showModal, setShowModal] = useState(false);
+
+	function toggleModal(e) {
+		setShowModal(true);
+	}
+
 	return (
-		<div className="relative inline-block rounded-lg wrapper h-96">
-			<Image
-				src={imagePath}
-				layout="fill"
-				className="round"
-				objectFit="cover"
-			/>
+		<div className="relative h-80">
+			<Image src={imagePath} layout="fill" objectFit="cover" />
 			<div
-				className="absolute inset-0 flex flex-col justify-start p-4 transition-all duration-100 bg-black cursor-pointer rounded-xl hover:bg-opacity-30 bg-opacity-60"
-				onClick={(e) => setShowModal(true)}
+				className="absolute inset-0 flex flex-col justify-start p-4 transition-all duration-100 bg-black cursor-pointer hover:bg-opacity-30 bg-opacity-60"
+				onClick={toggleModal}
 			>
 				<div className="text-white">
 					<div>
@@ -30,11 +30,6 @@ export default function NewsItem({ details }) {
 			{showModal && (
 				<NewsItemModal details={details} onClick={(e) => setShowModal(false)} />
 			)}
-			<style jsx global>{`
-				.round {
-					border-radius: 0.75rem /* 12px */;
-				}
-			`}</style>
 		</div>
 	);
 }

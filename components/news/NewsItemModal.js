@@ -14,8 +14,8 @@ export default function NewsItemModal({ details, onClick }) {
 				className="relative flex flex-col w-10/12 max-w-2xl px-8 py-12 space-y-4 bg-white rounded-md"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<div className="relative h-60">
-					<Image src={imagePath} layout="fill" objectFit="cover" />
+				<div className="relative">
+					<img src={imagePath} />
 				</div>
 				<div className="flex flex-col space-y-4">
 					<div className="flex justify-between">
@@ -28,7 +28,7 @@ export default function NewsItemModal({ details, onClick }) {
 							{createdAt.getHours()}:{createdAt.getMinutes()}
 						</div>
 					</div>
-					<div className="flex-1">{body}</div>
+					<div className="overflow-y-scroll h-60">{body}</div>
 				</div>
 				<Button
 					type="button"
