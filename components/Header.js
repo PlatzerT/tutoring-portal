@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-export default function Header() {
+export default function Header({ title }) {
 	return (
 		<div>
 			<Head>
@@ -28,8 +28,10 @@ export default function Header() {
 					href="/favicon/safari-pinned-tab.svg"
 					color="#5bbad5"
 				/>
+				<title>{title}</title>
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#ffffff" />
+				<meta name="description" content="Erhalte sofort Nachhilfe bei mir!" />
 			</Head>
 		</div>
 	);

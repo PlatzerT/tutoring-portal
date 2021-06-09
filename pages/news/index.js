@@ -6,6 +6,7 @@ import NewsList from 'components/news/NewsList';
 export default function NewsPage({ news }) {
 	return (
 		<div>
+			<Header title="Nachhilfe | News" />
 			<Menu />
 			<div className="mb-10 text-5xl font-bold text-dark">News</div>
 			<hr />

@@ -5,6 +5,7 @@ import DownloadableFilesList from 'components/downloads/DownloadableFilesList';
 export default function DownloadsPage({ downloadableFiles }) {
 	return (
 		<div className="text-dark">
+			<Header title="Nachhilfe | Downloads" />
 			<Menu />
 			<h1 className="mb-10 text-5xl font-bold">Downloads</h1>
 			<hr />

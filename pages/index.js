@@ -9,7 +9,7 @@ import Layout from '../components/Layout';
 export default function Home({ subjects }) {
 	return (
 		<div className="flex flex-col h-full ">
-			<Header />
+			<Header title="Nachhilfe | Home" />
 			<div className="relative z-50">
 				<Menu />
 			</div>

@@ -4,6 +4,7 @@ import Menu from 'components/menu/Menu';
 export default function ImprintPage() {
 	return (
 		<div className="text-dark">
+			<Header title="Nachhilfe | Impressum" />
 			<Menu />
 			<h1 className="mb-10 text-5xl font-bold md:flex text-dark">Impressum</h1>
 			<div className="flex flex-col space-y-6">

@@ -5,6 +5,7 @@ import Image from 'next/image';
 export default function LocationPage() {
 	return (
 		<div className="h-full">
+			<Header title="Nachhilfe | Lageplan" />
 			<Menu />
 		</div>
 	);
