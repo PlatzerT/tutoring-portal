@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Layout from './Layout';
+import Link from 'next/link';
 
 export default function Footer() {
 	return (
@@ -29,29 +30,46 @@ export default function Footer() {
 						</h2>
 						<nav className="mb-10 list-none">
 							<li>
-								<a className="text-gray-600 cursor-pointer hover:text-gray-800">
-									News
-								</a>
+								<Link href="/news">
+									<a className="text-gray-600 cursor-pointer hover:text-gray-800">
+										News
+									</a>
+								</Link>
 							</li>
 							<li>
-								<a className="text-gray-600 cursor-pointer hover:text-gray-800">
-									Sitemap
-								</a>
+								<Link href="/sitemap">
+									<a className="text-gray-600 cursor-pointer hover:text-gray-800">
+										Sitemap
+									</a>
+								</Link>
 							</li>
 							<li>
-								<a className="text-gray-600 cursor-pointer hover:text-gray-800">
-									Impressum
-								</a>
+								<Link href="/location">
+									<a className="text-gray-600 cursor-pointer hover:text-gray-800">
+										Lageplan
+									</a>
+								</Link>
 							</li>
 							<li>
-								<a className="text-gray-600 cursor-pointer hover:text-gray-800">
-									Downloads
-								</a>
+								<Link href="/imprint">
+									<a className="text-gray-600 cursor-pointer hover:text-gray-800">
+										Impressum
+									</a>
+								</Link>
 							</li>
 							<li>
-								<a className="text-gray-600 cursor-pointer hover:text-gray-800">
-									Kontakt
-								</a>
+								<Link href="/downloads">
+									<a className="text-gray-600 cursor-pointer hover:text-gray-800">
+										Downloads
+									</a>
+								</Link>
+							</li>
+							<li>
+								<Link href="/contact">
+									<a className="text-gray-600 cursor-pointer hover:text-gray-800">
+										Kontakt
+									</a>
+								</Link>
 							</li>
 						</nav>
 					</div>
@@ -77,9 +95,7 @@ export default function Footer() {
 								</a>
 							</li>
 							<li>
-								<a className="text-gray-600 hover:text-gray-800">
-									0650/4029770
-								</a>
+								<a className="text-gray-600">0650/4029770</a>
 							</li>
 						</nav>
 					</div>

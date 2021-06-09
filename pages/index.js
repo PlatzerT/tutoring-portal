@@ -14,7 +14,7 @@ export default function Home({ subjects }) {
 				<Menu />
 			</div>
 
-			<main className="relative z-10 flex flex-col justify-start lg:flex-1 lg:justify-center bb">
+			<main className="relative z-10 flex flex-col justify-start lg:flex-1 lg:justify-center">
 				<div className="space-y-0 sm:space-y-1 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mb-16">
 					{/* Hero section */}
 					<div className="flex flex-col items-center justify-center">
