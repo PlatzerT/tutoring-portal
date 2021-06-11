@@ -7,11 +7,11 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
-	if (router.pathname === '/dashboard') {
+	if (router.pathname === '/') {
 		return (
-			<div className="h-screen">
-				<Header title="Dashboard" />
+			<div className="w-screen">
 				<Component {...pageProps} />
+				<Footer />
 			</div>
 		);
 	}
