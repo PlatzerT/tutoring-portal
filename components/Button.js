@@ -9,7 +9,11 @@ export default function Button({
 	return (
 		<button
 			{...props}
-			className={`text-lg font-bold text-white transition-all rounded-md bg-gradient-to-r from-purple-900 to-purple-500 hover:opacity-90 ${additionalClasses}`}
+			className={`text-lg font-bold flex justify-center items-center text-white transition-all rounded-md ${
+				!additionalClasses.includes('bg')
+					? 'bg-gradient-to-r from-purple-900 to-purple-500'
+					: ''
+			}  hover:opacity-90 ${additionalClasses}`}
 		>
 			{children}
 		</button>

@@ -10,7 +10,6 @@ export default function Home({ subjects }) {
 			<Layout>
 				<Header title="Nachhilfe | Home" />
 				<Menu />
-
 				<main className="flex flex-col justify-start lg:flex-1 lg:justify-center">
 					<div className="space-y-0 sm:space-y-1 md:space-y-15 md:flex md:flex-col lg:flex-row lg:justify-around lg:mb-40">
 						{/* Hero section */}

@@ -1,9 +1,6 @@
 import multer from 'multer';
 import initMiddleware from '../../../lib/initMiddleware';
 import fs from 'fs';
-import path from 'path';
-
-import mime from 'mime-types';
 
 export const config = {
 	api: {
@@ -17,12 +14,21 @@ const multerAny = initMiddleware(upload.any());
 export default async (req, res) => {
 	await multerAny(req, res);
 
+	res.setHeader('Content-type', 'text/plain');
+
 	if (req.method !== 'POST') {
 		return res.status(405).send('Method not allowed!');
 	}
 
 	const { files } = req;
 	let { name, email, subject, message } = req.body;
+
+	// Check if file size is bigger than 100MB
+	for (let i = 0; i < files.length; i++) {
+		if (files[i].size > 100000000) {
+			return res.status(413).send('Dateien müssen kleiner als 100MB sein');
+		}
+	}
 
 	let formattedName = email + '(' + name + ')';
 
@@ -61,6 +67,6 @@ export default async (req, res) => {
 	} catch (err) {
 		return res.status(400).send('Something went wrong uploading!');
 	}
-	res.setHeader('Content-type', 'text/plain');
+
 	res.status(200).send('Form uploaded!');
 };

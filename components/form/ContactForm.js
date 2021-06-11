@@ -7,18 +7,27 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
+function getUploadedStatusStyles(status) {
+	switch (status) {
+		case 'initial':
+			return '';
+		case 'success':
+			return 'border-green-600 bg-green-600';
+	}
+}
+
 export default function ContactForm({ subjects }) {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [message, setMessage] = useState('');
+	const [errorMsg, setErrorMsg] = useState(null);
+	const [uploadStatus, setUploadStatus] = useState('initial');
 	const [selectedSubject, setSelectedSubject] = useState(
 		subjects[0].abbreviation || null
 	);
 	const [files, setFiles] = useState([]);
 	const [displayedFiles, setDisplayedFiles] = useState([]);
 	const router = useRouter();
-
-	var isValid = name.length > 0 && email.length > 0 && message.length > 0;
 
 	function onDrop(acceptedFiles) {
 		setFiles(acceptedFiles);
@@ -50,9 +59,17 @@ export default function ContactForm({ subjects }) {
 				'Content-Type': 'multipart/form-data',
 			},
 		};
-		const res = await axios.post('/api/contact/upload', form, config);
-		if (res.status === 200) {
-			router.push('/');
+		try {
+			const res = await axios.post('/api/contact/upload', form, config);
+			setUploadStatus('success');
+			setTimeout(() => {
+				router.push('/');
+			}, 2000);
+		} catch (err) {
+			if (err.response.status === 413) {
+				setErrorMsg(err.response.data);
+				setUploadStatus('error');
+			}
 		}
 	}
 	return (
@@ -64,6 +81,9 @@ export default function ContactForm({ subjects }) {
 				id="contact"
 				onSubmit={handleSubmit}
 			>
+				{errorMsg && (
+					<div className="px-2 py-1 text-red-700 bg-red-100">{errorMsg}</div>
+				)}
 				<InputField
 					label="Name"
 					name="name"
@@ -86,7 +106,7 @@ export default function ContactForm({ subjects }) {
 					<label htmlFor="subject">Fach</label>
 					<select
 						id="subject"
-						className="px-2 py-1 text-white bg-purple-600"
+						className="px-2 py-1 text-white bg-primary"
 						value={selectedSubject}
 						onChange={(e) => setSelectedSubject(e.currentTarget.value)}
 					>
@@ -122,8 +142,17 @@ export default function ContactForm({ subjects }) {
 						</div>
 					)}
 				</div>
-				<Button type="submit" disabled={false} additionalClasses="h-16">
-					Absenden
+				<Button
+					type="submit"
+					disabled={false}
+					additionalClasses={`h-16 border-2 ${getUploadedStatusStyles(
+						uploadStatus
+					)}`}
+				>
+					Absenden{' '}
+					{uploadStatus === 'success' && (
+						<div className="w-6 h-6 ml-3 ease-linear border-2 border-t-2 border-white rounded-full border-opacity-30 loader"></div>
+					)}
 				</Button>
 			</form>
 			<div className="flex-1 hidden md:flex md:flex-col">
@@ -151,6 +180,31 @@ export default function ContactForm({ subjects }) {
 					)}
 				</div>
 			</div>
+			<style jsx>{`
+				.loader {
+					border-top-color: #ffffff;
+					-webkit-animation: spinner 1.5s linear infinite;
+					animation: spinner 1.5s linear infinite;
+				}
+
+				@-webkit-keyframes spinner {
+					0% {
+						-webkit-transform: rotate(0deg);
+					}
+					100% {
+						-webkit-transform: rotate(360deg);
+					}
+				}
+
+				@keyframes spinner {
+					0% {
+						transform: rotate(0deg);
+					}
+					100% {
+						transform: rotate(360deg);
+					}
+				}
+			`}</style>
 		</div>
 	);
 }
