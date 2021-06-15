@@ -20,9 +20,13 @@ export default function Footer() {
 					<p className="mt-2 text-sm text-gray-500">
 						Erhalte sofort Nachhilfe!
 					</p>
-					<button className="px-4 py-2 mt-3 border border-transparent rounded-md hover:border-white bg-primary">
-						Los geht's
-					</button>
+					<div className="mt-3">
+						<Link href="/contact">
+							<a className="px-4 py-2 border border-transparent rounded-md hover:border-white bg-primary">
+								Los geht's
+							</a>
+						</Link>
+					</div>
 				</div>
 				<div className="flex flex-wrap flex-grow order-first -mb-10 text-center md:pr-20 md:text-left">
 					<div className="w-full px-4 lg:w-1/4 md:w-1/2">
