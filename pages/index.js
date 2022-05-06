@@ -16,22 +16,21 @@ export default function Home({ subjects }) {
 						{/* Hero section */}
 						<div className="flex flex-col items-center justify-center">
 							<div className="flex flex-col w-full space-y-5">
-								<div className="text-5xl font-bold">
-									<span className="text-primary">Noten</span> verbessern.
+								<div className="font-extrabold text-8xl">
+									<span className="">Noten</span> verbessern.
 								</div>
-								<div className="flex flex-col space-y-4">
-									<div className="font-medium w-96">
+								<div className="flex flex-col">
+									<div className="text-lg text-gray-600">
 										Du hast es satt schlechte Noten zu schreiben, hast aber
-										jetzt die Motivation dich zu verbessern ✅
+										jetzt die Motivation dich zu verbessern.
 									</div>
-									<div className="flex flex-col space-y-1 text-sm">
-										<div>Erhalte Nachhilfe in:</div>
-
+									<div className="flex mt-4 space-x-5 text-sm">
+										<div>Nachhilfe:</div>
 										<div className="flex space-x-3">
 											{subjects.map((subject) => (
 												<div
 													key={subject.abbreviation}
-													className="px-1 font-semibold text-gray-800 bg-gray-100 border border-gray-800 rounded-sm"
+													className="px-2 text-purple-700 bg-purple-100 rounded-lg"
 												>
 													{subject.abbreviation}
 												</div>
@@ -40,7 +39,7 @@ export default function Home({ subjects }) {
 									</div>
 
 									<Link href="/contact">
-										<a className="self-start px-5 py-3 font-bold tracking-wider text-center text-white uppercase rounded bg-dark hover:bg-primary">
+										<a className="self-start px-8 py-3 mt-10 text-white transition-all rounded-md focus:ring-offset-white focus:ring-offset-2 focus:ring-2 focus:ring-dark bg-dark">
 											Kontaktieren
 										</a>
 									</Link>
